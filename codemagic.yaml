@@ -8,8 +8,8 @@ workflows:
         script: |
           echo "Current directory:"
           pwd
-          echo "Directory structure:"
-          ls -R
+          echo "Complete directory tree:"
+          find . -print
       - name: Debug codemagic directory
         script: |
           echo "Contents of codemagic directory:"
@@ -26,6 +26,8 @@ workflows:
           find . -type f -name "build.gradle" || echo "build.gradle file not found"
           echo "Searching for app/build.gradle file:"
           find . -type f -name "build.gradle" -path "*/app/*" || echo "app/build.gradle file not found"
+          echo "Searching for package.json file:"
+          find . -type f -name "package.json" || echo "package.json file not found"
       - name: Install dependencies
         script: |
           cd codemagictest
