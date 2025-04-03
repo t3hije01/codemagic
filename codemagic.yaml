@@ -3,7 +3,6 @@ workflows:
     name: React Native Workflow
     environment:
       node: 16 # Specify the Node.js version
-      yarn: true # Use Yarn as the package manager
     scripts:
       - name: Install dependencies
         script: yarn install
