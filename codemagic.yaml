@@ -6,11 +6,11 @@ workflows:
     scripts:
       - name: Install dependencies
         script: |
-          cd app
+          cd codemagictest
           yarn install
       - name: Run tests
         script: |
-          cd app
+          cd codemagictest
           yarn test
       - name: Build the app
         script: |
