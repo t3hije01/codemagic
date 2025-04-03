@@ -14,6 +14,10 @@ workflows:
         script: |
           echo "Contents of codemagic directory:"
           ls codemagic || echo "codemagic directory not found"
+      - name: Debug codemagictest directory
+        script: |
+          echo "Contents of codemagictest directory:"
+          ls codemagictest || echo "codemagictest directory not found"
       - name: Install dependencies
         script: |
           cd codemagictest
