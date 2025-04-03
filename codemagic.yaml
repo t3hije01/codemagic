@@ -13,7 +13,6 @@ workflows:
       - name: Run tests
         script: |
           cd codemagictest
-          cd __tests__
           yarn test
       - name: Build the app
         script: |
