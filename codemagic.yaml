@@ -26,14 +26,12 @@ workflows:
           find . -type f -name "yarn.lock" || echo "yarn.lock file not found"
       - name: Install dependencies
         script: |
-          PACKAGE_JSON_DIR=$(find . -type f -name "package.json" | xargs -n1 dirname | head -n 1)
-          if [ -z "$PACKAGE_JSON_DIR" ]; then
-            echo "package.json not found"
-            echo "Please ensure the repository contains a valid package.json file."
+          cd codemagictest
+          if [ ! -f "package.json" ]; then
+            echo "package.json not found in codemagictest directory"
             exit 1
           fi
-          echo "Installing dependencies in $PACKAGE_JSON_DIR"
-          cd "$PACKAGE_JSON_DIR"
+          echo "Installing dependencies in codemagictest"
           yarn install
       - name: Build the app
         script: |
