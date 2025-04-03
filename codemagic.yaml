@@ -22,6 +22,8 @@ workflows:
         script: |
           echo "Searching for android directory:"
           find . -type d -name "android" || echo "android directory not found"
+          echo "Searching for build.gradle file:"
+          find . -type f -name "build.gradle" || echo "build.gradle file not found"
       - name: Install dependencies
         script: |
           cd codemagictest
