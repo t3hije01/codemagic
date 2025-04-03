@@ -18,12 +18,22 @@ workflows:
         script: |
           echo "Contents of codemagictest directory:"
           ls codemagictest || echo "codemagictest directory not found"
+      - name: Debug android directory
+        script: |
+          echo "Searching for android directory:"
+          find . -type d -name "android" || echo "android directory not found"
       - name: Install dependencies
         script: |
           cd codemagictest
           yarn install
       - name: Build the app
         script: |
-          cd codemagictest/android && ./gradlew assembleRelease
+          ANDROID_DIR=$(find . -type d -name "android" | head -n 1)
+          if [ -z "$ANDROID_DIR" ]; then
+            echo "Android directory not found"
+            exit 1
+          fi
+          echo "Building app in $ANDROID_DIR"
+          cd "$ANDROID_DIR" && ./gradlew assembleRelease
     artifacts:
       - codemagictest/android/app/build/outputs/**/*
