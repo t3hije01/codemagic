@@ -24,11 +24,17 @@ workflows:
           find . -type d -name "node_modules" || echo "node_modules directory not found"
           echo "Searching for yarn.lock file:"
           find . -type f -name "yarn.lock" || echo "yarn.lock file not found"
+      - name: Verify codemagictest directory
+        script: |
+          echo "Contents of codemagictest directory:"
+          ls codemagictest || echo "codemagictest directory not found"
       - name: Install dependencies
         script: |
           cd codemagictest
           if [ ! -f "package.json" ]; then
             echo "package.json not found in codemagictest directory"
+            echo "Contents of current directory:"
+            ls
             exit 1
           fi
           echo "Installing dependencies in codemagictest"
