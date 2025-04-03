@@ -5,9 +5,13 @@ workflows:
       node: 16 # Specify the Node.js version
     scripts:
       - name: Install dependencies
-        script: yarn install
+        script: |
+          cd app
+          yarn install
       - name: Run tests
-        script: yarn test
+        script: |
+          cd app
+          yarn test
       - name: Build the app
         script: |
           cd android && ./gradlew assembleRelease
