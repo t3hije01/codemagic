@@ -24,6 +24,8 @@ workflows:
           find . -type d -name "android" || echo "android directory not found"
           echo "Searching for build.gradle file:"
           find . -type f -name "build.gradle" || echo "build.gradle file not found"
+          echo "Searching for app/build.gradle file:"
+          find . -type f -name "build.gradle" -path "*/app/*" || echo "app/build.gradle file not found"
       - name: Install dependencies
         script: |
           cd codemagictest
@@ -33,6 +35,11 @@ workflows:
           ANDROID_DIR=$(find . -type d -name "android" | head -n 1)
           if [ -z "$ANDROID_DIR" ]; then
             echo "Android directory not found"
+            echo "Attempting to locate app/build.gradle instead..."
+            ANDROID_DIR=$(find . -type f -name "build.gradle" -path "*/app/*" | xargs -n1 dirname | head -n 1)
+          fi
+          if [ -z "$ANDROID_DIR" ]; then
+            echo "Android project directory not found"
             exit 1
           fi
           echo "Building app in $ANDROID_DIR"
