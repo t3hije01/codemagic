@@ -4,6 +4,8 @@ workflows:
     environment:
       node: 16 # Specify the Node.js version
     scripts:
+      - name: Debug repository structure
+        script: ls -R # Print the directory structure for debugging
       - name: Install dependencies
         script: |
           cd codemagictest
@@ -14,6 +16,6 @@ workflows:
           yarn test
       - name: Build the app
         script: |
-          cd android && ./gradlew assembleRelease
+          cd codemagictest/android && ./gradlew assembleRelease
     artifacts:
-      - android/app/build/outputs/**/*
+      - codemagictest/android/app/build/outputs/**/*
