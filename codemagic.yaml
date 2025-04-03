@@ -10,16 +10,20 @@ workflows:
           pwd
           echo "Directory structure:"
           ls -R
+      - name: Debug codemagic directory
+        script: |
+          echo "Contents of codemagic directory:"
+          ls codemagic || echo "codemagic directory not found"
       - name: Install dependencies
         script: |
-          cd codemagic/codemagictest
+          cd codemagictest
           yarn install
       - name: Run tests
         script: |
-          cd codemagic/codemagictest
+          cd codemagictest
           yarn test
       - name: Build the app
         script: |
-          cd codemagic/codemagictest/android && ./gradlew assembleRelease
+          cd codemagictest/android && ./gradlew assembleRelease
     artifacts:
-      - codemagic/codemagictest/android/app/build/outputs/**/*
+      - codemagictest/android/app/build/outputs/**/*
