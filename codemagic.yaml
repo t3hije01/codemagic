@@ -22,11 +22,14 @@ workflows:
           find . -type f -name "package.json" || echo "package.json file not found"
           echo "Searching for node_modules directory:"
           find . -type d -name "node_modules" || echo "node_modules directory not found"
+          echo "Searching for yarn.lock file:"
+          find . -type f -name "yarn.lock" || echo "yarn.lock file not found"
       - name: Install dependencies
         script: |
           PACKAGE_JSON_DIR=$(find . -type f -name "package.json" | xargs -n1 dirname | head -n 1)
           if [ -z "$PACKAGE_JSON_DIR" ]; then
             echo "package.json not found"
+            echo "Please ensure the repository contains a valid package.json file."
             exit 1
           fi
           echo "Installing dependencies in $PACKAGE_JSON_DIR"
