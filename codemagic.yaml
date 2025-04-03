@@ -10,15 +10,7 @@ workflows:
           pwd
           echo "Complete directory tree:"
           find . -print
-      - name: Debug codemagic directory
-        script: |
-          echo "Contents of codemagic directory:"
-          ls codemagic || echo "codemagic directory not found"
-      - name: Debug codemagictest directory
-        script: |
-          echo "Contents of codemagictest directory:"
-          ls codemagictest || echo "codemagictest directory not found"
-      - name: Debug android directory
+      - name: Debug key files and directories
         script: |
           echo "Searching for android directory:"
           find . -type d -name "android" || echo "android directory not found"
@@ -28,9 +20,17 @@ workflows:
           find . -type f -name "build.gradle" -path "*/app/*" || echo "app/build.gradle file not found"
           echo "Searching for package.json file:"
           find . -type f -name "package.json" || echo "package.json file not found"
+          echo "Searching for node_modules directory:"
+          find . -type d -name "node_modules" || echo "node_modules directory not found"
       - name: Install dependencies
         script: |
-          cd codemagictest
+          PACKAGE_JSON_DIR=$(find . -type f -name "package.json" | xargs -n1 dirname | head -n 1)
+          if [ -z "$PACKAGE_JSON_DIR" ]; then
+            echo "package.json not found"
+            exit 1
+          fi
+          echo "Installing dependencies in $PACKAGE_JSON_DIR"
+          cd "$PACKAGE_JSON_DIR"
           yarn install
       - name: Build the app
         script: |
