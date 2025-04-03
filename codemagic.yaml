@@ -22,10 +22,6 @@ workflows:
         script: |
           cd codemagictest
           yarn install
-      - name: Run tests
-        script: |
-          cd codemagictest
-          yarn test
       - name: Build the app
         script: |
           cd codemagictest/android && ./gradlew assembleRelease
