@@ -28,13 +28,22 @@ workflows:
         script: |
           echo "Contents of codemagictest directory:"
           ls codemagictest || echo "codemagictest directory not found"
+          echo "Verifying package.json in codemagictest:"
+          if [ -f codemagictest/package.json ]; then
+            echo "package.json found in codemagictest"
+          else
+            echo "package.json not found in codemagictest"
+          fi
       - name: Install dependencies
         script: |
+          echo "Navigating to codemagictest directory..."
           cd codemagictest
+          echo "Current directory after navigation:"
+          pwd
+          echo "Contents of current directory:"
+          ls
           if [ ! -f "package.json" ]; then
             echo "package.json not found in codemagictest directory"
-            echo "Contents of current directory:"
-            ls
             exit 1
           fi
           echo "Installing dependencies in codemagictest"
