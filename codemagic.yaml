@@ -5,7 +5,24 @@ workflows:
         instance_type: mac_mini_m2
         
         environment:
-          android_signing:
-            - myKeystore
-          vars:
-           PACKAGE_NAME: "io.codemagic.sample.reactnative"
+          node: 16 # Specify the Node.js version
+        scripts:
+          - name: Set environment variables
+            script: |
+              export PACKAGE_NAME="io.codemagic.sample.reactnative"
+          - name: Configure Android signing
+            script: |
+              echo "Setting up Android signing..."
+              # Add Android signing setup commands here
+          - name: Install npm dependencies
+            script: |
+              npm install
+          - name: Set Android SDK location
+            script: |
+              echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Build Android release
+            script: |
+              cd android
+              ./gradlew bundleRelease
+        artifacts:
+          - android/app/build/outputs/**/*.aab
