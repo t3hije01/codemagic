@@ -16,6 +16,7 @@ workflows:
               # Add Android signing setup commands here
           - name: Install npm dependencies
             script: |
+              cd codemagictest
               npm install
           - name: Set Android SDK location
             script: |
