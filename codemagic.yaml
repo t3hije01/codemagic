@@ -6,4 +6,6 @@ workflows:
         
     environment:
         android_signing:
-        - myKeystore
+            - myKeystore
+        vars:
+        PACKAGE_NAME: "io.codemagic.sample.reactnative"
